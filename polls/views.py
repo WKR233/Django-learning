@@ -7,12 +7,9 @@ from .models import Question
 def index(request):
     latest_question_list=Question.objects.order_by("-pub_date")[:5]
     # order the 5 latest questions
-    template=loader.get_template("polls/index.html")
-    context={
-        "latest_question_list": latest_question_list,
-    }
-    return HttpResponse(template.render(context,request))
-    # load polls/index.html and pass it with context which is a dict
+    context={"latest_question_list":latest_question_list}
+    return render(request,"polls/index.html",context)
+    # load polls/index.html and pass it with context which is a dict used for mapping using render()
 
 def detail(request,question_id):
     return HttpResponse("You're looking at question %s." % question_id)
