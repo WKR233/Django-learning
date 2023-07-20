@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
@@ -12,7 +13,11 @@ def index(request):
     # load polls/index.html and pass it with context which is a dict used for mapping using render()
 
 def detail(request,question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
+    try:
+        question=Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist")
+    return render(request,"polls/detail.html",{"quesiton":question})
 
 def results(request,question_id):
     response="You're looking at the results of question %s."
