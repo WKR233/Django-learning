@@ -112,3 +112,10 @@ Django 应用是可插拔的。你可以在多个项目中使用同一个应用�
 > https://docs.djangoproject.com/zh-hans/4.2/topics/templates/
 
 可以在urls.py中加入`app_name`来设置命名空间
+
+# tutorial 4
+对于detail.html：
+- 上面的模板在 `Question` 的每个 `Choice` 前添加一个单选按钮。 每个单选按钮的 `value` 属性是对应的各个 `Choice` 的 ID。每个单选按钮的 name 是 `"choice"` 。这意味着，当有人选择一个单选按钮并提交表单提交时，它将发送一个 POST 数据 `choice=#` ，其中# 为选择的 Choice 的 ID。
+- 我们将表单的 `action` 设置为 `{% url 'polls:vote' question.id %}`并设置 `method="post"`使用 method="post" （而不是 method="get" ）是非常重要的，因为提交这个表单的行为将改变服务器端的数据。当你创建一个改变服务器端数据的表单时，使用 method="post"。
+- `forloop.counter` 指示 for 标签已经循环多少次。
+- 由于我们创建一个 POST 表单（它具有修改数据的作用），所以我们需要小心跨站点请求伪造，所有针对内部 URL 的 POST 表单都应该使用 `{% csrf_token %}` 模板标签。
